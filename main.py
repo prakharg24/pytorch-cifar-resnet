@@ -3,7 +3,7 @@ import argparse
 import torch
 from tqdm import tqdm
 
-from dataloader import get_cifar10_data
+from dataloader import get_cifar10_data, get_cifar5m_data
 from resnet import ResNet18
 from train_utils import train_loop, eval_loop
 
@@ -27,11 +27,24 @@ wandb.init(
     "epochs": args.epochs,
     "device": args.device,
     "batch_size": args.bs,
-    }
+    },
+    # mode="disabled"
 )
 
 if args.dataset=='cifar10':
     trainloader, testloader = get_cifar10_data(args.bs)
+elif args.dataset=='cifar10-subset50':
+    trainloader, testloader = get_cifar10_data(args.bs, subset=0.5)
+elif args.dataset=='cifar5m-50k':
+    trainloader, testloader = get_cifar5m_data(args.bs, subset=50000)
+elif args.dataset=='cifar5m-100k':
+    trainloader, testloader = get_cifar5m_data(args.bs, subset=100000)
+elif args.dataset=='cifar5m-150k':
+    trainloader, testloader = get_cifar5m_data(args.bs, subset=150000)
+elif args.dataset=='cifar5m-200k':
+    trainloader, testloader = get_cifar5m_data(args.bs, subset=200000)
+elif args.dataset=='cifar5m-500k':
+    trainloader, testloader = get_cifar5m_data(args.bs, subset=500000)
 else:
     raise Exception("Dataset not supported yet")
 
