@@ -1,3 +1,5 @@
+import torch
+import torchvision
 from torchvision import transforms
 
 def get_cifar10_data(batch_size):

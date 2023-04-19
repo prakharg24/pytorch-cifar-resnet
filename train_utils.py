@@ -1,3 +1,5 @@
+import torch
+
 def train_loop(model, trainloader, optimizer, loss_criterion, device, scheduler=None):
     model.train()
     train_loss = 0

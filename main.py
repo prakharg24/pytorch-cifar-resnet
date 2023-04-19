@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(description='PyTorch CIFAR Training')
 parser.add_argument('--arch', default='resnet18', type=str, help='Model Architecture')
 parser.add_argument('--dataset', default='cifar10', type=str, help='Choose from cifar10 or cifar5m')
 parser.add_argument('--lr', default=0.1, type=float, help='Learning Rate')
-parser.add_argument('--epochs', default=200, type=int, help='Number of Epochs')
+parser.add_argument('--epochs', default=100, type=int, help='Number of Epochs')
 parser.add_argument('--bs', default=128, type=int, help='Batch Size')
 parser.add_argument('--device', default='cuda:0', type=str, help='Device for training')
 args = parser.parse_args()
@@ -51,4 +51,8 @@ for epoch in tqdm(range(args.epochs)):
 
     wandb.log({"train_loss": train_loss, "test_loss": test_loss, "test_acc": test_acc})
 
+savefile = 'models/' + args.dataset + '-' + args.arch + '.pth'
+torch.save(model.state_dict(), savefile)
+
+wandb.save(savefile)
 wandb.finish()
